@@ -43,8 +43,10 @@ S = sin(angle);
 xt =  C*xt + S*yt + mx; 
 yt = -S*xt + C*yt + my; 
 
+
+
 scale=t.s;
-xt = imresize(xt ,scale);
-yt = imresize(yt ,scale);
+xt = xt.* scale;
+yt = yt.* scale;
 
 end
