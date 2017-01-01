@@ -33,7 +33,7 @@ xt = x + xshift;
 yt = y + yshift; 
 
 
-angle=(pi/180).*t.r;
+angle=t.r/180*pi;
 xt = (xt - mx); 
 yt = (yt - my); 
 
@@ -46,7 +46,9 @@ yt = -S*xt + C*yt + my;
 
 
 scale=t.s;
-xt = xt.* scale;
-yt = yt.* scale;
+xt = imresize(xt ,scale);
+yt = imresize(yt ,scale);
 
+% xt = (xt.*scale);
+% yt = (yt.*scale);
 end
