@@ -33,7 +33,7 @@ xt = x + xshift;
 yt = y + yshift; 
 
 
-angle=t.r;
+angle=(pi/180).*t.r;
 xt = (xt - mx); 
 yt = (yt - my); 
 

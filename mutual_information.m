@@ -39,6 +39,6 @@ E2 = -sum(p2.*log(p2));
 
 p3(p3==0) = [];
 E3 = -sum(p3.*log(p3));
-mi = -(E1 + E2 - E3); 
+mi = (E1 + E2 - E3); 
 
 end
