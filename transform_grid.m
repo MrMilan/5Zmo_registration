@@ -24,7 +24,27 @@ mx = mean(x(:));
 my = mean(y(:));
 
 % TODO: Replace with your own implementation.
-xt = x;
-yt = y;
+
+%t = struct('x', 0, 'y', 0, 'r', 10, 's', 1);
+xshift=t.x;
+yshift=t.y;
+
+xt = x + xshift; 
+yt = y + yshift; 
+
+
+angle=t.r;
+xt = (xt - mx); 
+yt = (yt - my); 
+
+C = cos(angle); 
+S = sin(angle); 
+
+xt =  C*xt + S*yt + mx; 
+yt = -S*xt + C*yt + my; 
+
+scale=t.s;
+xt = imresize(xt ,scale);
+yt = imresize(yt ,scale);
 
 end
