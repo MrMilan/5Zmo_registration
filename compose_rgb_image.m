@@ -18,4 +18,13 @@ function img = compose_rgb_image(rgb, t_rgb, ref_channel)
 % TODO: Replace with your own implementation.
 img = repmat(rgb{1}, [1, 1, 3]);
 
+[h, w] = size(rgb{1});
+[x, y] = meshgrid(1:w, 1:h);
+
+
+for i = 1:3
+    t_inv = inverse_transformation(t_rgb{i});
+    [xt, yt] = transform_grid(x, y, t_inv);
+    img(:,:,i) = sample_image(rgb{i}, xt, yt);
+end
 end
