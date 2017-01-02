@@ -23,22 +23,36 @@ for level = num_levels:-1:1
  
 	% coordinate grid for the current level
 	x = linspace(1, w, ceil(w / mult));
-	y = % TODO
+	y = linspace(1, h, ceil(h / mult));% TODO
 	[x, y] = meshgrid(x, y);
  
 	% smooth both template and reference image
 	img_smooth = smooth_image(img, mult);
-	img_ref_smooth = % TODO
+	img_ref_smooth = smooth_image(img_ref, mult); % TODO
  
 	% subsample the smoothed template image in the grid coordinates
-	img_sampled = sample_image( % TODO
+	img_sampled = sample_image(img_smooth, x, y); % TODO
  
 	% generate space of transformations for the current level using the optimum
 	% transformation from the previous level
 	t_space = transformation_space_hierarchical(t_optim, level, num_levels, t_rng);
  
 	% find the optimum transformation in t_space and assign it to t_optim
-	t_optim = % TODO
+    fmin = inf;
+
+    for i=1:size(t_space, 2)
+        t = t_space(i);
+
+        [xt, yt] = transform_grid(x, y, t);   % transformed coordinate system
+        img_ref_t = sample_image(img_ref_smooth, xt, yt);   % subimage of the reference image
+    
+        argmin = cost_func(img_sampled, img_ref_t);
+
+        if argmin < fmin
+            fmin = argmin;
+            t_optim = t;
+        end
+    end
 end
 
 end

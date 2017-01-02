@@ -25,30 +25,21 @@ my = mean(y(:));
 
 % TODO: Replace with your own implementation.
 
-%t = struct('x', 0, 'y', 0, 'r', 10, 's', 1);
-xshift=t.x;
-yshift=t.y;
+[M, N] = size(x);
+tm = [ 1 0 -mx; 0 1 -my; 0 0 1 ];
+tmi = [ 1 0 mx; 0 1 my; 0 0 1 ];
 
-xt = x + xshift; 
-yt = y + yshift; 
+homogc = [ x(:)'; y(:)'; ones(1, M*N) ];
 
+mtrans = [ 1 0 t.x; 0 1 t.y; 0 0 1 ];
 
-angle=t.r/180*pi;
-xt = (xt - mx); 
-yt = (yt - my); 
+phi = t.r * pi / 180;
+mrot = [ cos(phi) sin(phi) 0; -sin(phi) cos(phi) 0; 0 0 1 ];
 
-C = cos(angle); 
-S = sin(angle); 
+mscale = [ t.s 0 0; 0 t.s 0; 0 0 1 ];
 
-xt =  C*xt + S*yt + mx; 
-yt = -S*xt + C*yt + my; 
+homogct = mtrans * tmi * mrot * mscale * tm * homogc;
 
-
-
-scale=t.s;
-xt = imresize(xt ,scale);
-yt = imresize(yt ,scale);
-
-% xt = (xt.*scale);
-% yt = (yt.*scale);
+xt = reshape(homogct(1,:), [M,N]);
+yt = reshape(homogct(2,:), [M,N]);
 end

@@ -18,5 +18,23 @@ t_space = transformation_space_exhaustive(t_rng);
 
 % TODO: Replace with your own implementation.
 t_optim = t_space(1);
+[h, w] = size(img);   % size of the template image
+[x, y] = meshgrid(1:w, 1:h); % coodinate system of the template image
+
+fmin = inf;
+
+for i=1:size(t_space, 2)
+    t = t_space(i);
+               
+    [xt, yt] = transform_grid(x, y, t);   % transformed coordinate system
+    img_ref_t = sample_image(img_ref, xt, yt);   % subimage of the reference image
+        
+    argmin = cost_func(img, img_ref_t);
+    
+    if argmin < fmin
+        fmin = argmin;
+        t_optim = t;
+    end
+end
 
 end
